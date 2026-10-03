@@ -1,115 +1,125 @@
-<h1 align="center">Interior Design for Claude Code</h1>
+# Interior Design for Claude Code
 
-<p align="center">
-  <strong>The open-source interior design studio system that is just a database and Claude Code.</strong>
-</p>
+Specifications, approvals, purchasing, deliveries and studio margins in a database you own. Built by Enterprise DNA. Works with Claude Code, Codex, OpenCode or Cursor.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
-
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Programa data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=programa">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/programa?utm_source=github&utm_medium=readme&utm_campaign=programa">How it works</a></td>
-  </tr>
-</table>
-
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-programa">Instead of Programa</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Interior Design for Claude Code does the job you pay Programa for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Programa dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Programa per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=programa).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free under MIT. Follow the quick start. | Your fields, rules, Programa mapping, client experience and optional web front end. [Book a call](https://enterprisedna.co/omni/book?offer=replace-software&utm_campaign=programa). | Installed, connected and operated through **Omni by Enterprise DNA**. One setup fee, then a retainer. [See the offer](https://enterprisedna.co/omni/instead-of/programa). |
 
 ## Quick start
 
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
+Node 22 on Windows or Linux. The demo needs no database installation.
 
 ```bash
 git clone https://github.com/Enterprise-DNA-OS/interior-design-for-claude-code.git
 cd interior-design-for-claude-code
 npm install
+npm test
 npm run demo
+npm run view
+npm run docs
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Open the folder in your coding agent and ask for /weekly-review. Fictional Harbour House and Fitzroy Studio include a late part delivery, a damaged pendant, an overdue fabric task, an unapproved chair and a below-cost selection. Dates move with the first seed. Repeating seed preserves existing records.
 
-### Use it with your own Postgres or Supabase
+## The studio week
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
+1. Check room schedules and obtain selection approvals.
+2. Review order deadlines against lead times.
+3. Chase late deliveries and record partial receipts and condition.
+4. Compare selection totals, budgets and gross margins by project currency.
+5. Review overdue tasks, design time and unresolved product issues.
 
-## The commands
+The CLI stores projects, suppliers, selections, approval evidence, orders, tasks, time, product issues and activity. Selection changes create a new revision requiring fresh approval. Orders require current approval. Ordered specifications are frozen and receipts cannot exceed the quantity. One order represents one selection line with a unique reference. It records a purchase order draft, never places an order with a supplier.
 
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
+## Commands
 
-| Command | What it does |
-|---|---|
-| `/...` | ... |
+- `/projects`: Run `node scripts/studio.mjs projects --json`.
+- `/suppliers`: Run `node scripts/studio.mjs suppliers --json`.
+- `/schedule`: Run `node scripts/studio.mjs schedule --json`.
+- `/approvals-due`: Run `node scripts/studio.mjs approvals-due --json`.
+- `/procurement`: Run `node scripts/studio.mjs procurement --json`.
+- `/delivery-chase`: Run `node scripts/studio.mjs delivery-chase --json`.
+- `/margins`: Run `node scripts/studio.mjs margins --json`.
+- `/tasks`: Run `node scripts/studio.mjs tasks --json`.
+- `/timesheets`: Run `node scripts/studio.mjs timesheets --json`.
+- `/issues`: Run `node scripts/studio.mjs issues --json`.
+- `/attention`: Run `node scripts/studio.mjs attention --json`.
+- `/compliance`: Run `node scripts/studio.mjs compliance --json`.
+- `/activity`: Run `node scripts/studio.mjs activity --json`.
+- `/project`: Run `node scripts/studio.mjs project "<name or id>" --json`.
+- `/selection`: Run `node scripts/studio.mjs selection "<name or id>" --json`.
+- `/questions`: Run `node scripts/studio.mjs questions --json`, choose the matching question, then run it with `--question=N --json`.
+- `/add`: Read `node scripts/studio.mjs --help`.
+- `/approve`: Read the selection first.
+- `/revise`: Read the selection.
+- `/order`: Read the selection and its current approval.
+- `/receive`: Read the order through /procurement.
+- `/log`: Run `node scripts/studio.mjs log "<project>" --note="<operator note>" --json`.
+- `/log-time`: Run `node scripts/studio.mjs time "<project>" --person="<person>" --minutes=<whole minutes> --rate=<hourly rate> --note="<work>" --json`.
+- `/complete`: Read /tasks.
+- `/issue`: Read the selection, then run `node scripts/studio.mjs issue "<selection>" --note="<observed problem>" --json`.
+- `/resolve`: Read /issues, then run `node scripts/studio.mjs resolve "<issue id>" --resolution="<agreed remedy and evidence reference>" --json`.
+- `/privacy-review`: Read docs/compliance.md.
+- `/import`: Read docs/replace-programa.md.
+- `/export`: Run `node scripts/studio.mjs export --out="<new private JSON path>" --json`.
+- `/draft-approval`: Read /project and /approvals-due.
+- `/weekly-review`: Run `node scripts/studio.mjs attention --json`, `node scripts/studio.mjs delivery-chase --json`, and `node scripts/studio.mjs margins --json`.
+- `/customise`: Ask which field or rule the operator wants changed.
+- `/new-view`: Read views.json and the existing database views.
 
-## Instead of programa
+Run `node scripts/studio.mjs --help` for arguments. Read commands show aligned text by default and accept --json. Names match without case; ID prefixes work. Ambiguous matches list candidates and exit 1. The recipes are in .claude/commands.
 
-<!-- TODO(author): how to bring data across from Programa; link docs/replace-programa.md -->
+## Ten questions across your records
 
-## Architecture
+These are implemented queries beyond a single schedule. They demonstrate this build's analysis, not a claim that Programa cannot produce an equivalent report. Run `node scripts/studio.mjs questions --question=N`.
 
-```
-interior-design-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
-```
+1. Which unapproved selections have already missed their order deadline?
+2. Which late deliveries also have an unresolved product issue?
+3. Which rooms have the most unapproved spending?
+4. Which selections are priced below supplier cost?
+5. Which projects exceed their selection budget?
+6. How much gross margin remains after recorded design time?
+7. Which suppliers have outstanding quantities across projects?
+8. Which deliveries are expected after the required date?
+9. Which active projects have gone quiet for more than fourteen days?
+10. Which current approvals no longer have a matching selection revision?
 
-## Built for coding agents
+The margin-after-time question subtracts recorded billable time value, not employee cost. Budget comparisons use selection sales totals. All figures are before tax, delivery charges and discounts unless those amounts were already included in your imported unit values. Project currencies never combine. There is no currency conversion, tax engine, payment processing or accounting reconciliation.
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+## Your first hour: ten things to ask for
 
-## Contributing
+1. Show this week's approvals and delivery problems.
+2. Show Harbour House's selections by room.
+3. Find selections whose ordering date has passed.
+4. Explain the Fitzroy pendant's negative margin.
+5. Record the approval reference I supply.
+6. Record two chairs arriving in good condition.
+7. Draft an approval request and leave it unsent.
+8. Render a client schedule with our business name.
+9. Check our Programa export and reconcile quantities and money before importing.
+10. Add a finish-sample reference with /customise.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+## Bring your records
 
-## Want it installed and run for you?
+[The switching guide](docs/replace-programa.md) documents Programa's Export as XLS option, saving as XLSX or CSV where needed, supported fields, mapping and reconciliation. Import is one command once the file and mapping are ready. The dry run validates the whole file and rolls back all writes. Repeated imports update by project and stable item code; a changed code means a new record. Local approvals, orders and notes are never inferred from imported status labels. Keep a backup before any import.
 
-Enterprise DNA installs Interior Design for Claude Code for your business, migrates your Programa data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+Client Price and Cost from Programa are treated as line totals. Unit Price and Trade Price are unit values. Totals are divided by quantity; a total that cannot be represented by a two-decimal unit price is rejected for review. Do not silently substitute recommended retail price for actual supplier cost.
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=programa)
-- Read more: [enterprisedna.co/omni/instead-of/programa](https://enterprisedna.co/omni/instead-of/programa?utm_source=github&utm_medium=readme&utm_campaign=programa)
+For business data, use a fresh DATA_DIR, run npm run migrate and do not seed. DATABASE_URL selects a shared Postgres database. Otherwise PGlite stores locally in .data/db. Configure private access, database roles, backups and document storage before real use. Do not share a local database directory between running processes.
 
-## License
+`node scripts/studio.mjs export --out=private-snapshot.json` exports all nine record types to a new JSON file. This is an exchange snapshot, not a restore command. Keep native database backups and original documents.
 
-MIT. Copyright (c) 2026 Enterprise DNA.
+## Paperwork and views
+
+Edit brand.json once for your business name, logo path and colours. npm run docs renders client schedules, purchase order drafts, delivery records and approval registers. Client schedules omit supplier costs and contact details. They are working documents, not tax invoices. npm run view renders the studio week, procurement, project money and evidence checks. Open the HTML locally and print it. Nothing is hosted or sent.
+
+[Compliance notes](docs/compliance.md) distinguish New Zealand source-based evidence prompts from studio rules. They do not certify compliance or inspect goods. [Why no front end](docs/why-no-front-end.md) describes where a visual interface or mobile workflow needs separate work.
+
+## Validation
+
+npm test uses temporary data and covers every CLI action, all ten questions, migration and seed repeatability, stale approvals, frozen orders, over-receipt guards, ambiguous names, CSV/XLSX mapping, line-total handling, rollback, snapshots, drafts and HTML. GitHub Actions runs Linux and Windows embedded tests and a Postgres 17 job. [Observed results](docs/validation.md).
+
+## Licence
+
+MIT. Copyright 2026 Enterprise DNA. Programa is named for compatibility and comparison. No affiliation or endorsement is implied.

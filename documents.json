@@ -1,11 +1,56 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
+    "name": "client-schedule",
+    "title": "Client selection schedule",
+    "for_each": "select id,name from projects",
     "file": "name",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Selections for review, before tax",
+        "note": "Working selection record. Approval applies to the stated revision. This document is not a tax invoice.",
+        "sql": "select room,name,sku,specification,image_url,quantity,currency,price,revision,approval from schedule where project_id=$1 order by room,name"
+      }
+    ]
+  },
+  {
+    "name": "purchase-order",
+    "title": "Purchase order draft",
+    "for_each": "select id,reference from orders",
+    "file": "reference",
+    "sections": [
+      {
+        "title": "Order details",
+        "note": "DRAFT. Review supplier terms and delivery details before sending. Prices exclude tax.",
+        "sql": "select o.reference,s.supplier,s.supplier_email,s.project,s.room,s.name,s.sku,s.specification,s.quantity,s.currency,s.unit_cost,s.cost,o.expected_date from orders o join schedule s on s.id=o.selection_id where o.id=$1"
+      }
+    ]
+  },
+  {
+    "name": "delivery-record",
+    "title": "Delivery and condition record",
+    "for_each": "select id,reference from orders",
+    "file": "reference",
+    "sections": [
+      {
+        "title": "Receipt",
+        "sql": "select o.reference,s.project,s.name,s.quantity,o.received_quantity,o.received_date,o.condition_note from orders o join schedule s on s.id=o.selection_id where o.id=$1"
+      },
+      {
+        "title": "Product issues and remedies",
+        "sql": "select i.note,i.resolution,i.created_at from issues i join orders o on o.selection_id=i.selection_id where o.id=$1"
+      }
+    ]
+  },
+  {
+    "name": "approval-register",
+    "title": "Selection approval register",
+    "for_each": "select id,name from projects",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Recorded decisions",
+        "sql": "select s.room,s.name,a.revision,a.decision,a.actor,a.evidence,a.created_at from approvals a join selections s on s.id=a.selection_id where s.project_id=$1 order by a.created_at"
+      }
     ]
   }
 ]

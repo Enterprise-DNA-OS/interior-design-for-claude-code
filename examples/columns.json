@@ -1,0 +1,8 @@
+{
+  "key": "Item reference",
+  "name": "Item name",
+  "room": "Location",
+  "supplier": "Vendor",
+  "cost": "Buy price",
+  "price": "Sell price"
+}

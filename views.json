@@ -1,13 +1,45 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Interior Design for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Studio week",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Attention",
+        "sql": "select project,name,reason from attention order by project,reason"
+      },
+      {
+        "title": "Tasks",
+        "sql": "select p.name project,t.name,t.owner,t.due_date from tasks t join projects p on p.id=t.project_id where not t.done order by t.due_date"
+      }
+    ]
+  },
+  {
+    "name": "procurement",
+    "title": "Procurement and deliveries",
+    "sections": [
+      {
+        "title": "Outstanding",
+        "sql": "select project,room,name,supplier,reference,expected_date,quantity,received_quantity,status from procurement where status<>'received' order by expected_date"
+      }
+    ]
+  },
+  {
+    "name": "margins",
+    "title": "Project money",
+    "sections": [
+      {
+        "title": "Separate project currencies, before tax",
+        "sql": "select name,currency,budget,selections_total,supplier_cost,gross_margin,time_value,budget_remaining from project_totals"
+      }
+    ]
+  },
+  {
+    "name": "compliance",
+    "title": "Evidence review",
+    "sections": [
+      {
+        "title": "Checks, not a compliance certificate",
+        "sql": "select project,name,rule,finding from compliance_checks"
       }
     ]
   }
