@@ -4,7 +4,7 @@ Specifications, approvals, purchasing, deliveries and studio margins in a databa
 
 | Do it yourself | We customise it | We run it for you |
 |---|---|---|
-| Free under MIT. Follow the quick start. | Your fields, rules, Programa mapping, client experience and optional web front end. [Book a call](https://enterprisedna.co/omni/book?offer=replace-software&utm_campaign=programa). | Installed, connected and operated through **Omni by Enterprise DNA**. One setup fee, then a retainer. [See the offer](https://enterprisedna.co/omni/instead-of/programa). |
+| Free under MIT. Follow the quick start. | Your fields, rules, Programa mapping, client experience and optional web front end. [Book a call](https://enterprisedna.co/omni/book?offer=replace-software&utm_campaign=programa). | Installed, connected and operated through **Omni by Enterprise DNA**. One setup fee, then a retainer. [See the offer](https://enterprisedna.co/omni/instead-of/programa?utm_source=github&utm_medium=readme&utm_campaign=programa). |
 
 ## Quick start
 
